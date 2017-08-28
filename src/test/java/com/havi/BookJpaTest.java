@@ -3,6 +3,7 @@ package com.havi;
 import com.havi.domain.Book;
 import com.havi.repository.BookRepository;
 
+import org.hamcrest.collection.IsEmptyCollection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,14 +34,14 @@ public class BookJpaTest {
     private BookRepository bookRepository;
 
     @Test
-    public void TestEntityManager로_book저장하고_찾기() {
+    public void Book저장하기_테스트() {
         Book book = Book.builder().title(BOOT_TEST_TITLE).publishedAt(LocalDateTime.now()).build();
         testEntityManager.persist(book);
         assertThat(bookRepository.findOne(book.getIdx()), is(book));
     }
 
     @Test
-    public void TestEntityManager로_bookList저장하고_찾기() {
+    public void BookList저장하고_찾기_테스트() {
         Book book1 = Book.builder().title(BOOT_TEST_TITLE+"1").publishedAt(LocalDateTime.now()).build();
         testEntityManager.persist(book1);
         Book book2 = Book.builder().title(BOOT_TEST_TITLE+"2").publishedAt(LocalDateTime.now()).build();
@@ -54,9 +55,13 @@ public class BookJpaTest {
     }
 
     @Test
-    public void BookRepository로_book저장하고_찾기() {
-        Book book = Book.builder().title(BOOT_TEST_TITLE).publishedAt(LocalDateTime.now()).build();
-        bookRepository.save(book);
-        assertThat(bookRepository.findOne(book.getIdx()), is(book));
+    public void BookList저장하고_삭제_테스트() {
+        Book book1 = Book.builder().title(BOOT_TEST_TITLE+"1").publishedAt(LocalDateTime.now()).build();
+        testEntityManager.persist(book1);
+        Book book2 = Book.builder().title(BOOT_TEST_TITLE+"2").publishedAt(LocalDateTime.now()).build();
+        testEntityManager.persist(book2);
+
+        bookRepository.deleteAll();
+        assertThat(bookRepository.findAll(), IsEmptyCollection.empty());
     }
 }
