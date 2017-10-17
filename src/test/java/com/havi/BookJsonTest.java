@@ -19,25 +19,16 @@ public class BookJsonTest {
     private JacksonTester<Book> json;
 
     @Test
-    public void testSerialize() throws Exception {
+    public void json_테스트() throws Exception {
         Book book = Book.builder()
                 .title("테스트")
                 .build();
 
-        assertThat(this.json.write(book)).isEqualToJson("test.json");
+        String content = "{\"title\":\"테스트\"}";
+        assertThat(this.json.parseObject(content).getTitle()).isEqualTo(book.getTitle());
+
+        assertThat(this.json.write(book)).isEqualToJson("/test.json");
         assertThat(this.json.write(book)).hasJsonPathStringValue("title");
         assertThat(this.json.write(book)).extractingJsonPathStringValue("title").isEqualTo("테스트");
-    }
-
-    @Test
-    public void testDeserialize() throws Exception {
-        Book book = Book.builder()
-                .title("테스트")
-                .build();
-        String content = "{\"title\":\"테스트\"}";
-        assertThat(this.json.parse(content)).isEqualTo(Book.builder()
-                .title("테스트")
-                .build());
-        //assertThat(this.json.parseObject(content).getMake()).isEqualTo("Ford");
     }
 }
