@@ -26,6 +26,7 @@ public class BookJsonTest {
 
         String content = "{\"title\":\"테스트\"}";
         assertThat(this.json.parseObject(content).getTitle()).isEqualTo(book.getTitle());
+        assertThat(this.json.parseObject(content).getPublishedAt()).isNull();
 
         assertThat(this.json.write(book)).isEqualToJson("/test.json");
         assertThat(this.json.write(book)).hasJsonPathStringValue("title");
