@@ -15,7 +15,7 @@ public class BookRestController {
     private BookRestService bookRestService;
 
     @GetMapping(path = "/rest/test", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Book VehicleDetailsJson() {
+    public Book getRestBooks() {
         return bookRestService.getRestBook();
     }
 }
