@@ -34,7 +34,7 @@ public class BookRestTest {
     private MockRestServiceServer server;
 
     @Test
-    public void rest_테스트() throws Exception {
+    public void rest_테스트() {
         this.server.expect(requestTo("/rest/test"))
                 .andRespond(withSuccess(new ClassPathResource("/test.json", getClass()), MediaType.APPLICATION_JSON));
         Book book = this.bookRestService.getRestBook();
@@ -42,8 +42,9 @@ public class BookRestTest {
     }
 
     @Test
-    public void rest_error_테스트() throws Exception {
-        this.server.expect(requestTo("/rest/test")).andRespond(withServerError());
+    public void rest_error_테스트() {
+        this.server.expect(requestTo("/rest/test"))
+                .andRespond(withServerError());
         this.thrown.expect(HttpServerErrorException.class);
         this.bookRestService.getRestBook();
     }
