@@ -37,7 +37,7 @@ public class BookJpaTest {
     public void Book저장하기_테스트() {
         Book book = Book.builder().title(BOOT_TEST_TITLE).publishedAt(LocalDateTime.now()).build();
         testEntityManager.persist(book);
-        assertThat(bookRepository.findOne(book.getIdx()), is(book));
+        assertThat(bookRepository.getOne(book.getIdx()), is(book));
     }
 
     @Test
